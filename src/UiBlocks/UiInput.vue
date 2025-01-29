@@ -12,7 +12,6 @@
   const passwordHidden = ref(props.passwordMask ? 'yes' : false);
   const errorField = computed(() => content.value ===  '');
   function togglePassword() {
-    console.log(passwordHidden);
     passwordHidden.value = passwordHidden.value === 'yes' ? 'no' : 'yes' ;
   }
 </script>

@@ -7,7 +7,6 @@
   const store = useLkFormsStore();
   //localStorage.setItem('lk-forms', '0' );
   store.updateData();
-  console.log(store.lkForms);
   const forms = store.lkForms;
   const onUnfocus = (id: number, content: string | object, block: string) :void => {
     store.activateValidation(id);
