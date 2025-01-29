@@ -46,7 +46,6 @@
           :content="form.login"
           @unfocused="(content) => onUnfocus(form.id, content, 'login')"
           :validationActive="form.validationActive"
-          :passwordMask='false' 
           placeholder="Логин"
           :maxlength="100"
         />
@@ -55,10 +54,7 @@
           :content="form.password"
           @unfocused="(content) => onUnfocus(form.id, content, 'password' )"
           :validationActive="form.validationActive"
-          :passwordMask='passwordsMask'
-          :passwordExists="true"
-          @toggle-mask="() => { console.log(passwordsMask);
-            passwordsMask = !passwordsMask}"
+          :passwordMask='true'
           class="password"
           placeholder="Пароль"
           :maxlength="100"
