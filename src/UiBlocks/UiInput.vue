@@ -20,7 +20,7 @@
 <template>
   <div class="input">
     <input :type="passwordHidden === 'yes' ? 'password' : 'text'" @blur="$emit('unfocused', content)" v-model="content" :class="{ error: validationActive && errorField }" :placeholder="placeholder" :maxlength="maxlength">
-    <img @click="togglePassword" v-if="passwordHidden === 'yes'" src="@/assets/icons/openPassword.png" alt="Показать пароль">
-    <img @click="togglePassword" v-else-if="passwordHidden === 'no'" src="@/assets/icons/hidePassword.png" alt="Скрыть пароль">
+    <img @click="togglePassword" v-if="passwordHidden === 'yes'" src="@/assets/icons/openPassword.png" alt="Показать пароль" height="20" width="20" >
+    <img @click="togglePassword" v-else-if="passwordHidden === 'no'" src="@/assets/icons/hidePassword.png" alt="Скрыть пароль" height="20" width="20" >
   </div>
 </template>
