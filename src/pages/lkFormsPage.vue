@@ -5,8 +5,15 @@
   import { ref, computed } from 'vue'
 
   const store = useLkFormsStore();
+  //localStorage.setItem('lk-forms', '0' );
+  store.updateData();
+  console.log(store.lkForms);
   const forms = store.lkForms;
-
+  const onUnfocus = (id: number, content: string | object, block: string) :void => {
+    store.activateValidation(id);
+    store.changeForm(id, { [block]: content});
+  }
+  const passwordsMask = ref(true);
 </script>
 
 <template>
@@ -20,15 +27,43 @@
       <span>Для указания нескольких меток для одной пары логин/пароль используйте разделитель ";"</span>
     </div>
     <div class="lk-forms__content">
-      <div v-for="form in forms" :key="form.id.valueOf()" class="lk-form">
-        <UiInput class="mark" @unfocused="() => " placeholder="XXX;YYY;ZZZ" :maxlength="50" />
-        <UiSelect type="Локальная" @change-type="(newType) => store.changeForm(form.id.valueOf(), { type: newType})" class="type" />
-        <UiInput class="login" @unfocused="() => " placeholder="Логин" :maxlength="100" />
-        <UiInput v-show="() => computed(() => form.type.valueOf() === 'Локальная')" @unfocused="() => " :validationActive="form.validationActive" class="password" placeholder="Пароль" :maxlength="100" > 
-          <img v-if="form.password?.hidden" src="@/assets/icons/openPassword.png" @click="store.togglePassword" alt="Показать пароль">
-          <img v-else src="@/assets/icons/hidePassword.png" @click="store.togglePassword" alt="Скрыть пароль">
-        </UiInput>
-        <img src="@/assets/icons/delete.svg" @click="() => store.deleteForm(form.id.valueOf())" alt="Удалить учетную запись">
+      <div v-for="form in forms" :key="form.id" class="lk-form">
+        <UiInput 
+          class="mark"
+          @unfocused="(content) => onUnfocus(form.id, content, 'mark')"
+          :content="form.mark"
+          :validationActive="false"
+          placeholder="XXX;YYY;ZZZ"
+          :maxlength="50"
+        />
+        <UiSelect 
+          type="Локальная"
+          @change-type="(newType) => store.changeForm(form.id, { type: newType})"
+          class="type"
+        />
+        <UiInput
+          class="login"
+          :content="form.login"
+          @unfocused="(content) => onUnfocus(form.id, content, 'login')"
+          :validationActive="form.validationActive"
+          :passwordMask='false' 
+          placeholder="Логин"
+          :maxlength="100"
+        />
+        <UiInput 
+          v-show="form.type === 'Локальная'"
+          :content="form.password"
+          @unfocused="(content) => onUnfocus(form.id, content, 'password' )"
+          :validationActive="form.validationActive"
+          :passwordMask='passwordsMask'
+          :passwordExists="true"
+          @toggle-mask="() => { console.log(passwordsMask);
+            passwordsMask = !passwordsMask}"
+          class="password"
+          placeholder="Пароль"
+          :maxlength="100"
+        />
+        <img src="@/assets/icons/delete.svg" @click="() => store.deleteForm(form.id)" alt="Удалить учетную запись">
       </div>
     </div>
   </div>

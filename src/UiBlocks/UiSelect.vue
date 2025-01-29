@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
   defineProps({
     type: String,
   });
@@ -8,7 +7,7 @@
 <template>
   <div class="select">
     <select @change="(e) => $emit('changeType', e.target.value)" >
-      <option>Локальный</option>
+      <option>Локальная</option>
       <option>LDAP</option>
     </select>
   </div>
