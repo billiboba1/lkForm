@@ -13,7 +13,6 @@
     store.activateValidation(id);
     store.changeForm(id, { [block]: content});
   }
-  const passwordsMask = ref(true);
 </script>
 
 <template>
